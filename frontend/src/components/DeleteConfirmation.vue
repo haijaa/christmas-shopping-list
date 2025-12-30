@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 const showDelete = ref(false);
+const errorPrompt = ref(null);
 const props = defineProps(["gift"]);
 const emit = defineEmits(["giftDeleted"]);
 
@@ -12,7 +13,7 @@ const deleteGift = async (id) => {
 
     if (!response.ok) {
       const error = await response.json();
-      alert(error.message);
+      errorPrompt.value = error.message;
       return;
     }
     const result = await response.json();
@@ -26,6 +27,7 @@ const deleteGift = async (id) => {
 </script>
 
 <template>
+  <p v-if="errorPrompt != null">{{ errorPrompt }}</p>
   <button
     class="text-red-500 px-3 py-1 rounded-lg hover:cursor-pointer"
     @click="showDelete = !showDelete"
