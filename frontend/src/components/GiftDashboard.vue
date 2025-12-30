@@ -43,7 +43,7 @@ const updatePurchasedState = async (gift) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        purchased: !gift.purchased,
+        purchased: gift.purchased,
       }),
     });
     if (!response.ok) {
@@ -62,7 +62,7 @@ fetchGifts();
 <template>
   <p v-if="loading">Loading gifts...</p>
   <p v-else-if="errorPrompt != null">
-    Oops, seems to be missing some items. Try reloading.
+    {{ errorPrompt }}. Try reloading the server.
   </p>
   <div v-else class="flex flex-col justify-center">
     <div class="flex items-center gap-3 border-b border-gray-300 p-2">
